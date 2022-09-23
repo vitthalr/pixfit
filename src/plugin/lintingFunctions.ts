@@ -220,7 +220,7 @@ export function checkEffects(node, errors) {
         createErrorObject(
           node,
           "effects",
-          "Missing effects style",
+          "Box Shadow - do not hardcode box shadow, use tokens",
           currentStyle
         )
       );
@@ -322,21 +322,13 @@ export function checkType(node, errors) {
     console.log(fontStyle.family);
     let fontSize = node.fontName;
 
-    // If font family is not Segoe UI
-    if (fontStyle.family !== "Segoe UI") {
-      console.log("Yahoo");
-      return errors.push(
-        createErrorObject(node, "text", "Incorrect font family", "Use Segoe UI")
-      );
-    }
-
     if (typeof fontSize === "symbol") {
       return errors.push(
         createErrorObject(
           node,
           "text",
-          "Missing text style",
-          "Mixed sizes or families"
+          "Custom font styles not allowed",
+          "Use font style tokens"
         )
       );
     }
@@ -346,8 +338,8 @@ export function checkType(node, errors) {
         createErrorObject(
           node,
           "text",
-          "Missing text style",
-          "Mixed sizes or families"
+          "Custom font styles not allowed",
+          "use font style tokens"
         )
       );
     }
@@ -366,7 +358,12 @@ export function checkType(node, errors) {
     let currentStyle = `${textObject.font} ${textObject.fontStyle} / ${textObject.fontSize} (${textObject.lineHeight} line-height)`;
 
     return errors.push(
-      createErrorObject(node, "text", "Missing text style", currentStyle)
+      createErrorObject(
+        node,
+        "text",
+        "Custom font styles not allowed, use font style tokens",
+        currentStyle
+      )
     );
   } else {
     return;
